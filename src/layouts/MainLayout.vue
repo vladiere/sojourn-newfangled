@@ -27,6 +27,15 @@
             dropdown-icon="change_history"
           >
             <q-list>
+              <q-item clickable v-close-popup @click="onItemClick('home')">
+                <q-avatar>
+                  <q-icon name="fas fa-house" />
+                </q-avatar>
+                <q-item-section>
+                  <q-item-label>Home</q-item-label>
+                </q-item-section>
+              </q-item>
+
               <q-item clickable v-close-popup @click="onItemClick('profile')">
                 <q-avatar>
                   <q-icon name="fas fa-user" />
