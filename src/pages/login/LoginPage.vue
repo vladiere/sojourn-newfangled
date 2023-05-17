@@ -1,7 +1,7 @@
 <template>
   <div class="bg-primary fullscreen">
     <div
-      class="column full-width justify-center items-center q-gutter-lg q-mt-xl"
+      class="column full-width justify-center items-center q-gutter-lg q-mt-lg"
     >
       <img
         src="https://cdn.discordapp.com/attachments/1091354250958868494/1107660600420618320/sojourn.png"

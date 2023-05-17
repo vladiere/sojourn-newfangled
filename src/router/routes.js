@@ -6,44 +6,71 @@ const routes = [
     component: () => import("pages/login/LoginPage.vue"),
   },
   {
-    path: "/home",
-    name: "home",
+    path: "/owner",
+    name: "owner",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        name: 'home',
-        component: () => import("pages/home/HomePage.vue"),
+        name: "owner",
+        component: () => import("pages/owner/home/HomePage.vue"),
       },
       {
-        path: '/add-building',
-        name: 'add-building',
-        component: () => import('pages/addBuilding/AddBuilding.vue')
+        path: "/add-building",
+        name: "add-building",
+        component: () => import("pages/owner/addBuilding/AddBuilding.vue"),
       },
       {
-        path: '/reserve-list',
-        name: 'reserve-list',
-        component: () => import('pages/reserveList/ReserveList.vue')
+        path: "/reserve-list",
+        name: "reserve-list",
+        component: () => import("pages/owner/reserveList/ReserveList.vue"),
       },
       {
-        path: '/building-owned',
-        name: 'building-owned',
-        component: () => import('pages/building/BuildingOwned.vue')
+        path: "/building-owned",
+        name: "building-owned",
+        component: () => import("pages/owner/building/BuildingOwned.vue"),
       },
       {
-        path: '/settings',
-        name: 'settings',
-        component: () => import('pages/settings/SettingsPage.vue')
+        path: "/settings",
+        name: "settings",
+        component: () => import("pages/owner/settings/SettingsPage.vue"),
       },
       {
-        path: '/profile',
-        name: 'profile',
-        component: () => import('pages/profile/ProfilePage.vue')
+        path: "/profile",
+        name: "profile",
+        component: () => import("pages/owner/profile/ProfilePage.vue"),
       },
       {
-        path: '/notifications',
-        name: 'notifications',
-        component: () => import('pages/notifications/NotificationsPage.vue')
+        path: "/notifications",
+        name: "notifications",
+        component: () =>
+          import("pages/owner/notifications/NotificationsPage.vue"),
+      },
+    ],
+    // meta: {
+    //   requiresAuth: true,
+    //   role: "owner",
+    // },
+  },
+  {
+    path: "/customer",
+    name: "customer",
+    component: () => import("layouts/CustomerLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "customer",
+        component: () => import("pages/customer/home/HomepageView.vue"),
+      },
+      {
+        path: "/customer-profile",
+        name: "customer-profile",
+        component: () => import("pages/customer/profile/ProfileView.vue"),
+      },
+      {
+        path: "/customer-settings",
+        name: "customer-settings",
+        component: () => import("pages/customer/settings/SettingsView.vue"),
       },
     ],
     // meta: {

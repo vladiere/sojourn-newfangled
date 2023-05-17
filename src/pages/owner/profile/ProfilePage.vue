@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
-    <h1>Profile Page</h1>
+    <div class="row full-width justify-center items-center">
+      <img src="https://cdn.quasar.dev/img/avatar.png" style="width: 20em;" />
+
+    </div>
   </q-page>
 </template>
 

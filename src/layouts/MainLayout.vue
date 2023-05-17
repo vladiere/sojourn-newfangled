@@ -27,7 +27,7 @@
             dropdown-icon="change_history"
           >
             <q-list>
-              <q-item clickable v-close-popup @click="onItemClick('home')">
+              <q-item clickable v-close-popup @click="onItemClick('owner')">
                 <q-avatar>
                   <q-icon name="fas fa-house" />
                 </q-avatar>

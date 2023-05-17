@@ -24,9 +24,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat align="right" color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat align="right" color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
       <q-card class="my-card" flat bordered style="max-width: 600px;">
@@ -50,9 +50,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
       <q-card class="my-card" flat bordered style="max-width: 600px;">
@@ -76,9 +76,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
       <q-card class="my-card" flat bordered style="max-width: 600px;">
@@ -102,9 +102,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
       <q-card class="my-card" flat bordered style="max-width: 600px;">
@@ -128,9 +128,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
       <q-card class="my-card" flat bordered style="max-width: 600px;">
@@ -154,9 +154,9 @@
         <q-separator />
 
         <q-card-actions>
-          <q-icon flat round name="event" style="font-size: 2rem;"/>
-          <q-btn flat> 7:30PM </q-btn>
-          <q-btn flat color="black"> Reserve </q-btn>
+
+          <q-btn flat> Edit </q-btn>
+          <q-btn flat color="negative"> Remove </q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -167,7 +167,7 @@
 import { defineComponent, ref } from "vue";
 
 defineComponent({
-  name: "HomeImgCard",
+  name: "BuildingCard",
 });
 
 const lorem = ref(
