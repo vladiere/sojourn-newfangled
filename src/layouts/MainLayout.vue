@@ -14,7 +14,13 @@
         <q-toolbar-title> Sojourn Newfangled </q-toolbar-title>
 
         <div class="row items-center q-gutter-md q-mr-xl">
-          <q-btn dense round flat icon="fas fa-bell" @click="onItemClick('notifications')" >
+          <q-btn
+            dense
+            round
+            flat
+            icon="fas fa-bell"
+            @click="onItemClick('notifications')"
+          >
             <q-badge color="red" floating transparent> 4 </q-badge>
           </q-btn>
           <q-avatar>
@@ -82,7 +88,7 @@
         />
       </q-list>
       <q-list class="q-mt-xl">
-        <q-item-label header> Sojourn Newfangled </q-item-label>
+        <q-item-label header> Customer Service </q-item-label>
         <q-separator />
       </q-list>
     </q-drawer>
@@ -97,6 +103,7 @@
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from "src/stores/user-store";
 
 const linksList = [
   {
@@ -111,12 +118,6 @@ const linksList = [
     icon: "fas fa-list",
     link: "reserve-list",
   },
-  {
-    title: "Building Owned",
-    caption: "My Building Own",
-    icon: "fas fa-building-user",
-    link: "building-owned",
-  },
 ];
 
 export default defineComponent({
@@ -129,6 +130,7 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const router = useRouter();
+    const useStore = useUserStore();
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -137,6 +139,10 @@ export default defineComponent({
     const onItemClick = (path) => {
       if (path !== "logout") {
         router.push(path);
+      } else {
+        useStore.logout();
+        localStorage.clear();
+        router.push("/");
       }
     };
 

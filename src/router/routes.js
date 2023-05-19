@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: "/",
@@ -13,44 +12,63 @@ const routes = [
       {
         path: "",
         name: "owner",
-        component: () => import("pages/owner/home/HomePage.vue"),
+        component: () => import("pages/owner/home/BuildingOwned.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
       {
         path: "/add-building",
         name: "add-building",
         component: () => import("pages/owner/addBuilding/AddBuilding.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
       {
         path: "/reserve-list",
         name: "reserve-list",
         component: () => import("pages/owner/reserveList/ReserveList.vue"),
-      },
-      {
-        path: "/building-owned",
-        name: "building-owned",
-        component: () => import("pages/owner/building/BuildingOwned.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
       {
         path: "/settings",
         name: "settings",
         component: () => import("pages/owner/settings/SettingsPage.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
       {
         path: "/profile",
         name: "profile",
         component: () => import("pages/owner/profile/ProfilePage.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
       {
         path: "/notifications",
         name: "notifications",
         component: () =>
           import("pages/owner/notifications/NotificationsPage.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
       },
     ],
-    // meta: {
-    //   requiresAuth: true,
-    //   role: "owner",
-    // },
+    meta: {
+      requiresAuth: true,
+      role: "owner",
+    },
   },
   {
     path: "/customer",
@@ -61,22 +79,34 @@ const routes = [
         path: "",
         name: "customer",
         component: () => import("pages/customer/home/HomepageView.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "customer",
+        },
       },
       {
         path: "/customer-profile",
         name: "customer-profile",
         component: () => import("pages/customer/profile/ProfileView.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "customer",
+        },
       },
       {
         path: "/customer-settings",
         name: "customer-settings",
         component: () => import("pages/customer/settings/SettingsView.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "customer",
+        },
       },
     ],
-    // meta: {
-    //   requiresAuth: true,
-    //   role: "customer",
-    // },
+    meta: {
+      requiresAuth: true,
+      role: "customer",
+    },
   },
   {
     path: "/register",
@@ -97,4 +127,4 @@ const routes = [
   },
 ];
 
-export default routes
+export default routes;

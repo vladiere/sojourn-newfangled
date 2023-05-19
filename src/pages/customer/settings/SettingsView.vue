@@ -1,14 +1,14 @@
 <template>
   <q-page padding>
-    <HomeImgCard />
+    <h1>Customers Settings</h1>
   </q-page>
 </template>
 
 <script setup>
 import { defineComponent } from 'vue'
-import HomeImgCard from 'src/components/card/HomeImgCard.vue';
 
 defineComponent({
-  name: 'HomePage'
+  name: 'SettingsView'
 })
+
 </script>

@@ -69,6 +69,7 @@
 import { defineComponent, ref } from "vue";
 import { api } from "src/boot/axios";
 import { useRouter } from "vue-router";
+import { useUserStore } from "src/stores/user-store";
 
 defineComponent({
   name: "LoginPage",
@@ -80,15 +81,25 @@ const form = ref({
   username: "",
   password: "",
 });
-const router = useRouter()
-const address = ref('');
+const useStore = useUserStore()
+const router = useRouter();
+const address = ref("");
 
-const handleSubmit = () => {
-  router.push('/home')
-}
+const handleSubmit = async () => {
+  await api.post("/login", form.value).then((res) => {
+    console.log(res.data.user)
+    if (res.data.status == 200) {
+      useStore.setUserData(res.data.user)
+      localStorage.setItem('token', res.data.token)
 
-const handleRecovery = () => {
+      if (res.data.user.st_role === 'owner') {
+        router.push('/owner')
+      } else {
+        router.push('/customer')
+      }
+    }
+  });
+};
 
-}
-
+const handleRecovery = () => {};
 </script>

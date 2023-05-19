@@ -74,16 +74,22 @@
 <script setup>
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router';
+import { useUserStore } from 'src/stores/user-store';
 
 defineComponent({
   name: 'CustomerLayout'
 })
 
 const router = useRouter()
+const useStore = useUserStore()
 
 const onItemClick = (path) => {
   if (path !== 'logout') {
     router.push(path)
+  } else {
+    useStore.logout()
+    localStorage.clear()
+    router.push('/')
   }
 }
 </script>

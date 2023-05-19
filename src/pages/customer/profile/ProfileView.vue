@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <!-- content -->
+    <h1>Customer Profile</h1>
   </q-page>
 </template>
 
