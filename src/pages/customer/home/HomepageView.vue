@@ -8,4 +8,10 @@
 import { defineComponent } from 'vue'
 import BuildingCardCustomer from 'src/components/card/BuildingCardCustomer.vue';
 
+defineComponent({
+  name: 'HomepageView'
+})
+
+
+
 </script>

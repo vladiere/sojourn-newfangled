@@ -38,7 +38,13 @@
               />
             </div>
             <div class="col">
-              <q-input outlined color="teal" v-model="form.price" label="Price">
+              <q-input
+                type="number"
+                outlined
+                color="teal"
+                v-model="form.price"
+                label="Price"
+              >
                 <template v-slot:append>
                   <q-icon name="fas fa-peso-sign" />
                 </template>
@@ -107,7 +113,7 @@
             </div>
             <div class="col">
               <div class="row">
-                <div class="col">
+                <div class="col q-mr-md">
                   <q-input
                     outlined
                     color="teal"
@@ -152,8 +158,10 @@ const $q = useQuasar();
 const useStore = useUserStore();
 const userData = useStore.data;
 const file = ref(null);
+const imgUrl = ref("");
 const form = ref({
   id: "",
+  image: "",
   title: "",
   price: "",
   openhours: "",
@@ -191,6 +199,10 @@ const previewFile = (file) => {
   };
 
   reader.readAsDataURL(file);
+
+  setTimeout(() => {
+    addImage();
+  }, 500);
 };
 
 const addImage = async () => {
@@ -199,20 +211,47 @@ const addImage = async () => {
     formData.append("file", file.value);
 
     const res = await api.post("/add-image", formData);
-    return res.data;
+    imgUrl.value = res.data;
   } catch (error) {
     console.error(error);
   }
 };
 
 const handleAddBuilding = async () => {
-  const imgUrl = addImage();
   form.value.id = userData.id;
+  form.value.image = imgUrl.value;
   try {
-    console.log(form.value, imgUrl);
-    // const res = await api.post('/add-building', form.value)
+
+    const res = await api.post('/add-building', form.value)
+    console.log(res.data[0].st_code)
+    if (res.data[0].st_code == 200) {
+      $q.notify({
+        position: 'top',
+        type: 'positive',
+        message: res.data[0].st_msg
+      })
+    } else {
+      $q.notify({
+        position: 'top',
+        type: 'negative',
+        message: res.data[0].st_msg
+      })
+    }
+
+    form.value.title = ''
+    form.value.price = ''
+    form.value.openhours = ''
+    form.value.city = ''
+    form.value.province = ''
+    form.value.brgy = ''
+    form.value.street = ''
+    form.value.postal_code = ''
+    form.value.status = ''
+
+
   } catch (error) {
     console.error(error);
   }
 };
+
 </script>

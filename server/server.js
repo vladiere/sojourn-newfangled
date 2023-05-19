@@ -5,7 +5,7 @@ const cors = require("cors");
 const register = require("./register/register");
 const login = require("./login/login");
 const multer = require("multer");
-const owner = require("./owner/addBuilding");
+const owner = require("./owner/building");
 const path = require("path");
 
 const port = process.env.SERVER_PORT;
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     cb(null, "../public/uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now()+file.originalname );
+    cb(null, Date.now() + file.originalname);
   },
 });
 
@@ -43,11 +43,11 @@ app.post("/login", login.authenticateCustomerOwner);
 
 //Owner
 app.post("/add-image", upload.single("file"), (req, res) => {
-  const file = req.file
+  const file = req.file;
   res.send(file.filename);
 });
-app.post('/add-building', owner.addBuilding)
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.post("/add-building", owner.addBuilding);
+app.get("/get-buildings", owner.getMyBuildings);
+app.put("/remove-building/:id", owner.removedMyBuilding);
 
 app.listen(port, () => console.info(`Listening on ${port}`));

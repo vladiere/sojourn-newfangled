@@ -12,7 +12,7 @@ const routes = [
       {
         path: "",
         name: "owner",
-        component: () => import("pages/owner/home/BuildingOwned.vue"),
+        component: () => import("pages/owner/building/BuildingOwned.vue"),
         meta: {
           requiresAuth: true,
           role: "owner",
@@ -21,7 +21,16 @@ const routes = [
       {
         path: "/add-building",
         name: "add-building",
-        component: () => import("pages/owner/addBuilding/AddBuilding.vue"),
+        component: () => import("pages/owner/building/AddBuilding.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "owner",
+        },
+      },
+      {
+        path: "/edit",
+        name: "edit",
+        component: () => import("pages/owner/building/EditBuilding.vue"),
         meta: {
           requiresAuth: true,
           role: "owner",

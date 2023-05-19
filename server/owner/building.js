@@ -3,6 +3,7 @@ const db = require("../db/config");
 function addBuilding(req, res) {
   const {
     id,
+    image,
     title,
     price,
     openhours,
@@ -20,7 +21,7 @@ function addBuilding(req, res) {
     "CALL sp_addBuilding(?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
       id,
-      filename,
+      image,
       title,
       openhours,
       price,
@@ -44,6 +45,34 @@ function addBuilding(req, res) {
   );
 }
 
+const getMyBuildings = (req, res) => {
+  const { search, id } = req.query;
+
+  db.query(
+    "CALL sp_displaySearchBuilding(?,?,?)",
+    [search, id, ""],
+    (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    }
+  );
+};
+
+const removedMyBuilding = (req, res) => {
+  const { id } = req.params;
+
+  db.query(
+    "CALL sp_displaySearchBuilding(?,?,?)",
+    ["", id, "remove"],
+    (err, data) => {
+      if (err) throw err;
+      res.json(data[0]);
+    }
+  );
+};
+
 module.exports = {
   addBuilding,
+  getMyBuildings,
+  removedMyBuilding,
 };
