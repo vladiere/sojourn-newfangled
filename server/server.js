@@ -5,14 +5,21 @@ const cors = require("cors");
 const register = require("./register/register");
 const login = require("./login/login");
 const multer = require("multer");
-const addBuilding = require("./owner/addBuilding");
+const owner = require("./owner/addBuilding");
 const path = require("path");
 
-const port = 7000;
-
+const port = process.env.SERVER_PORT;
 
 const app = express();
-const upload = multer({ dest: "uploads/" });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../public/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now()+file.originalname );
+  },
+});
 
 // Middleware
 app.use(cors());
@@ -29,11 +36,17 @@ app.use(
   })
 );
 
+const upload = multer({ storage: storage });
+
 app.post("/register", register.registerCustomerOwner);
 app.post("/login", login.authenticateCustomerOwner);
 
 //Owner
-app.post("/add-building", upload.single("image"), addBuilding.addBuilding);
+app.post("/add-image", upload.single("file"), (req, res) => {
+  const file = req.file
+  res.send(file.filename);
+});
+app.post('/add-building', owner.addBuilding)
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

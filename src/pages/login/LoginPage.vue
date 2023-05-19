@@ -87,7 +87,7 @@ const address = ref("");
 
 const handleSubmit = async () => {
   await api.post("/login", form.value).then((res) => {
-    console.log(res.data.user)
+    
     if (res.data.status == 200) {
       useStore.setUserData(res.data.user)
       localStorage.setItem('token', res.data.token)

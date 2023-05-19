@@ -1,4 +1,4 @@
-const db = require("../../db/config");
+const db = require("../db/config.js");
 const jwt = require("jwt-simple");
 const bcrypt = require("bcrypt");
 
@@ -7,7 +7,7 @@ const createToken = (user) => {
     sub: user.id,
     iat: Date.now(),
   };
-  return jwt.encode(payload, secret);
+  return jwt.encode(payload, process.env.JWT_SECRET_KEY);
 };
 
 const authenticateCustomerOwner = (req, res) => {
@@ -30,9 +30,10 @@ const authenticateCustomerOwner = (req, res) => {
           if (err) throw err;
           else if (dbres) {
             const { password, ...others } = results[0][0];
+            id = others.owner_id || others.customer_id;
 
             res.status(200).json({
-              user: others,
+              user: { id, ...others },
               token: token,
               status: results[0][0].st_code,
               statusText: results[0][0].st_msg,
@@ -47,4 +48,8 @@ const authenticateCustomerOwner = (req, res) => {
       }
     }
   });
+};
+
+module.exports = {
+  authenticateCustomerOwner,
 };

@@ -14,6 +14,7 @@
               color="teal"
               filled
               v-model="file"
+              type="file"
               accept="image/png, image/jpeg, image/jpg"
               label="Building Image"
               :rules="checkFileType"
@@ -152,6 +153,7 @@ const useStore = useUserStore();
 const userData = useStore.data;
 const file = ref(null);
 const form = ref({
+  id: "",
   title: "",
   price: "",
   openhours: "",
@@ -187,55 +189,30 @@ const previewFile = (file) => {
   reader.onload = () => {
     previewUrl.value = reader.result;
   };
+
   reader.readAsDataURL(file);
 };
 
-const handleAddBuilding = async () => {
+const addImage = async () => {
   try {
     const formData = new FormData();
-    
-    formData.append("image", file.value);
-    formData.append("id", userData.id);
-    formData.append("title", form.value.title);
-    formData.append("price", form.value.price);
-    formData.append("openhours", form.value.openhours);
-    formData.append("city", form.value.city);
-    formData.append("province", form.value.province);
-    formData.append("brgy", form.value.brgy);
-    formData.append("street", form.value.street);
-    formData.append("status", form.value.status);
-    formData.append("postal_code", form.value.postal_code);
-    formData.append("building_id", form.value.building_id);
-    formData.append("description", form.value.description);
+    formData.append("file", file.value);
 
-    await api.post("/add-building", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    form.value = {
-      title: "",
-      price: "",
-      openhours: "",
-      city: "",
-      province: "",
-      brgy: "",
-      street: "",
-      status: "",
-    };
-    file.value = null;
-
-    $q.notify({
-      message: "Building added successfully",
-      type: "positive",
-    });
+    const res = await api.post("/add-image", formData);
+    return res.data;
   } catch (error) {
     console.error(error);
-    $q.notify({
-      message: "Failed to add building",
-      type: "negative",
-    });
+  }
+};
+
+const handleAddBuilding = async () => {
+  const imgUrl = addImage();
+  form.value.id = userData.id;
+  try {
+    console.log(form.value, imgUrl);
+    // const res = await api.post('/add-building', form.value)
+  } catch (error) {
+    console.error(error);
   }
 };
 </script>
