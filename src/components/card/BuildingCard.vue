@@ -1,9 +1,12 @@
 <template>
-  <q-card v-if="!deleted" class="my-card" flat bordered style="max-width: 600px; max-height: 300px">
+  <q-card
+    v-if="!deleted"
+    class="my-card"
+    flat
+    bordered
+    style="max-width: 600px; max-height: 300px"
+  >
     <q-card-section horizontal>
-      <q-card-section class="col-5 flex flex-center">
-        <q-img class="rounded-borders" :src="getImageUrl(img_url)" style="object-fit: cover;" />
-      </q-card-section>
 
       <q-card-section class="q-pt-xs">
         <div class="text-overline">{{ date_created }}</div>
@@ -17,13 +20,28 @@
           </div>
         </div>
       </q-card-section>
+      <q-card-section class="col-5 flex flex-center">
+        <q-img
+          class="rounded-borders"
+          :src="getImageUrl(img_url)"
+          style="object-fit: cover"
+        />
+      </q-card-section>
+      
     </q-card-section>
 
     <q-separator />
 
     <q-card-actions>
       <q-btn flat @click="handleEdit(building_id)"> Edit </q-btn>
-      <q-btn flat align="right" color="negative" @click="handleDelete(building_id)"> Remove </q-btn>
+      <q-btn
+        flat
+        align="right"
+        color="negative"
+        @click="handleDelete(building_id)"
+      >
+        Remove
+      </q-btn>
     </q-card-actions>
   </q-card>
 </template>
@@ -70,9 +88,8 @@ defineProps({
 
 const router = useRouter();
 const $q = useQuasar();
-const deleted = ref(false)
-const isDeleted = ref(false)
-
+const deleted = ref(false);
+const isDeleted = ref(false);
 
 const getImageUrl = (url) => {
   const publicPath = import.meta.env.BASE_URL;
@@ -80,29 +97,28 @@ const getImageUrl = (url) => {
 };
 
 const handleEdit = (id) => {
-  router.push('/edit?id=' + id)
+  router.push("/edit?id=" + id);
 };
 
 const handleDelete = async (id) => {
-  const res = await api.put(`/remove-building/${id}`)
+  const res = await api.put(`/remove-building/${id}`);
   if (res.data[0].st_code == 200) {
     $q.notify({
-      position: 'top',
-      type: 'positive',
-      message: res.data[0].st_msg
-    })
-    isDeleted.value = true
+      position: "top",
+      type: "positive",
+      message: res.data[0].st_msg,
+    });
+    isDeleted.value = true;
   } else {
     $q.notify({
-      position: 'top',
-      type: 'negative',
-      message: res.data[0].st_msg
-    })
+      position: "top",
+      type: "negative",
+      message: res.data[0].st_msg,
+    });
   }
-}
+};
 
 watchEffect(() => {
-  deleted.value = isDeleted.value
-})
-
+  deleted.value = isDeleted.value;
+});
 </script>

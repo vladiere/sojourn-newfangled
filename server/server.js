@@ -52,6 +52,6 @@ app.put("/remove-building/:id", owner.removedMyBuilding);
 
 //Customer
 app.post("/rent-building", customer.rentBuilding);
-
+app.get('/get-rent-building/:id', customer.rentBuilding)
 
 app.listen(port, () => console.info(`Listening on ${port}`));
