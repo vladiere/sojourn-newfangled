@@ -6,7 +6,7 @@ const register = require("./register/register");
 const login = require("./login/login");
 const multer = require("multer");
 const owner = require("./owner/building");
-const path = require("path");
+const customer = require("./client/rent");
 
 const port = process.env.SERVER_PORT;
 
@@ -49,5 +49,9 @@ app.post("/add-image", upload.single("file"), (req, res) => {
 app.post("/add-building", owner.addBuilding);
 app.get("/get-buildings", owner.getMyBuildings);
 app.put("/remove-building/:id", owner.removedMyBuilding);
+
+//Customer
+app.post("/rent-building", customer.rentBuilding);
+
 
 app.listen(port, () => console.info(`Listening on ${port}`));

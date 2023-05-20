@@ -1,20 +1,12 @@
 <template>
   <q-page padding class="q-pa-lg">
-    <div class="q-pa-md row full-width flex-center">
-      <q-input
-        style="width: 50%"
-        v-model="search"
-        label="Search..."
-        color="teal"
-      >
-        <template v-slot:prepend>
-          <q-icon name="search" />
-        </template>
-      </q-input>
-    </div>
     <div v-if="isEmpty" class="column justify-center items-center q-mt-xl">
       <span class="text-h2">Put something inside...</span>
-      <q-img :src="getImageUrl('empty-box.svg')" style="width:30%;" alt="SVG Image" />
+      <q-img
+        :src="getImageUrl('empty-box.svg')"
+        style="width: 30%"
+        alt="SVG Image"
+      />
     </div>
     <div class="q-mt-md row full-width">
       <div class="wrap-sm row justify-center items-center q-gutter-md">
@@ -33,6 +25,7 @@
 import { defineComponent, onMounted, ref, watchEffect } from "vue";
 import BuildingCard from "src/components/card/BuildingCard.vue";
 import { api } from "src/boot/axios";
+import { useUserStore } from "src/stores/user-store";
 
 defineComponent({
   name: "BuildingOwned",
@@ -40,19 +33,20 @@ defineComponent({
 
 const buildingData = ref({});
 const search = ref("");
-const isEmpty = ref(false)
+const isEmpty = ref(false);
+const useStore = useUserStore();
+const userData = useStore.data;
 
 const getBuilding = async () => {
   const params = {
     search: search.value || "",
     id: 0,
+    owner_id: userData.id
   };
 
   const res = await api.get("/get-buildings", { params });
 
   buildingData.value = res.data[0];
-
-  console.log(buildingData.value.length);
 };
 
 const getImageUrl = (url) => {
@@ -65,12 +59,8 @@ onMounted(() => {
 });
 
 watchEffect(() => {
-  getBuilding();
-
   if (buildingData.value.length == 0) {
-    isEmpty.value = true
+    isEmpty.value = true;
   }
-
-
 });
 </script>

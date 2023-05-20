@@ -46,11 +46,11 @@ function addBuilding(req, res) {
 }
 
 const getMyBuildings = (req, res) => {
-  const { search, id } = req.query;
+  const { search, id, owner_id } = req.query;
 
   db.query(
-    "CALL sp_displaySearchBuilding(?,?,?)",
-    [search, id, ""],
+    "CALL sp_displaySearchBuilding(?,?,?,?)",
+    [search, id, owner_id, ""],
     (err, data) => {
       if (err) throw err;
       res.json(data);

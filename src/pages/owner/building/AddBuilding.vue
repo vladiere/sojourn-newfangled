@@ -135,6 +135,7 @@
           </div>
         </form>
         <q-btn
+          :disable="done"
           label="Add Building"
           class="q-mb-md"
           @click="handleAddBuilding"
@@ -159,6 +160,7 @@ const useStore = useUserStore();
 const userData = useStore.data;
 const file = ref(null);
 const imgUrl = ref("");
+const done = ref(false)
 const form = ref({
   id: "",
   image: "",
@@ -230,6 +232,7 @@ const handleAddBuilding = async () => {
         type: 'positive',
         message: res.data[0].st_msg
       })
+      done.value = true
     } else {
       $q.notify({
         position: 'top',

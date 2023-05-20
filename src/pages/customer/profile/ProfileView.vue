@@ -1,6 +1,8 @@
 <template>
   <q-page padding>
-    <h1>Customer Profile</h1>
+    <div class="row justify-center">
+      <h1>Customer Profile</h1>
+    </div>
   </q-page>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
-  <q-card v-if="!deleted" class="my-card" flat bordered style="max-width: 600px; width: 300px">
-    <q-card-section vertical>
+  <q-card v-if="!deleted" class="my-card" flat bordered style="max-width: 600px; max-height: 300px">
+    <q-card-section horizontal>
       <q-card-section class="col-5 flex flex-center">
-        <q-img class="rounded-borders" :src="getImageUrl(img_url)" />
+        <q-img class="rounded-borders" :src="getImageUrl(img_url)" style="object-fit: cover;" />
       </q-card-section>
 
       <q-card-section class="q-pt-xs">

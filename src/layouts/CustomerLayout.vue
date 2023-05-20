@@ -14,9 +14,9 @@
 
       <div class="q-mr-md">
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
+            <img src="https://www.svgrepo.com/show/508196/user-circle.svg" />
           </q-avatar>
-          <span class="q-ml-sm text-subtitle1">John Añora</span>
+          <span class="q-ml-sm text-subtitle1 text-capitalize">{{ userData.firstname }} {{ userData.lastname }}</span>
           <q-btn-dropdown
             color="blue-grey-9"
             flat
@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useUserStore } from 'src/stores/user-store';
 
@@ -82,6 +82,11 @@ defineComponent({
 
 const router = useRouter()
 const useStore = useUserStore()
+const userData = ref({})
+
+userData.value = useStore.data
+
+console.log(userData.value)
 
 const onItemClick = (path) => {
   if (path !== 'logout') {

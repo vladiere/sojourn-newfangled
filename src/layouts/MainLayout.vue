@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="text-black">
+    <q-header elevated class="text-black text-capitalize">
       <q-toolbar>
         <q-btn
           flat
@@ -24,9 +24,9 @@
             <q-badge color="red" floating transparent> 4 </q-badge>
           </q-btn>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
+            <img src="https://www.svgrepo.com/show/508196/user-circle.svg" />
           </q-avatar>
-          <span>John Añora</span>
+          <span>{{ userData.firstname }} {{ userData.lastname }}</span>
           <q-btn-dropdown
             color="blue-grey-9"
             flat
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user-store";
@@ -126,11 +126,14 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-
+  async created() {
+    await api.get();
+  },
   setup() {
     const leftDrawerOpen = ref(false);
     const router = useRouter();
     const useStore = useUserStore();
+    const userData = useStore.data;
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -151,6 +154,7 @@ export default defineComponent({
       leftDrawerOpen,
       onItemClick,
       toggleLeftDrawer,
+      userData,
     };
   },
 });
