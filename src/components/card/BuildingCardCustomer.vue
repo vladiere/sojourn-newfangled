@@ -1,7 +1,11 @@
 <template>
-  <q-card class="my-card" flat bordered style="max-width: 500px; max-height: 350px;">
+  <q-card
+    class="my-card"
+    flat
+    bordered
+    style="max-width: 500px; max-height: 350px"
+  >
     <q-card-section horizontal>
-
       <q-card-section class="q-pt-xs">
         <div class="text-overline">{{ date_created }}</div>
         <div class="text-h5 q-mt-sm q-mb-xs">{{ building_name }}</div>
@@ -15,7 +19,7 @@
         <q-img
           class="rounded-borders"
           :src="getImageUrl(img_url)"
-          style="max-width: 100%; max-height: 100%;"
+          style="max-width: 100%; max-height: 100%"
         />
       </q-card-section>
     </q-card-section>
@@ -106,9 +110,93 @@
           readonly
         />
       </q-card-section>
+      <q-card-section>
+        <div class="column">
+          <span class="text-h6">Payment Method</span>
+          <div class="q-gutter-sm">
+            <q-radio
+              v-model="options"
+              color="negative"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              val="credit/debit"
+              label="Credit/Debit Card"
+            />
+            <q-radio
+              v-model="options"
+              color="negative"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              val="gcash"
+              label="GCash"
+            />
+          </div>
+          <div class="row q-gutter-md" v-if="options == 'credit/debit'">
+            <div class="col">
+              <q-input
+                maxlength="4"
+                square
+                outlined
+                color="black"
+                v-model="digits[0]"
+                label="Digit 1"
+              />
+            </div>
+
+            <div class="col">
+              <q-input
+                maxlength="4"
+                square
+                outlined
+                color="black"
+                v-model="digits[1]"
+                label="Digit 2"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                maxlength="4"
+                square
+                outlined
+                color="black"
+                v-model="digits[2]"
+                label="Digit 3"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                maxlength="4"
+                square
+                outlined
+                color="black"
+                v-model="digits[3]"
+                label="Digit 4"
+              />
+            </div>
+          </div>
+          <div class="" v-if="options == 'gcash'">
+            <q-input
+              square
+              outlined
+              color="black"
+              v-model="gcash"
+              label="GCash"
+              lazy-rule
+              :rules="[
+                (val) => regex.test(val) || 'Please enter a valid number',
+              ]"
+            />
+          </div>
+        </div>
+      </q-card-section>
 
       <q-card-actions align="right" class="bg-white text-teal">
-        <q-btn flat label="Set schedule" @click="handleRent(building_id)" :disable="isSucces" />
+        <q-btn
+          flat
+          label="Set schedule"
+          @click="handleRent(building_id)"
+          :disable="isSucces"
+        />
         <q-btn flat label="Cancel" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -120,6 +208,7 @@ import { defineComponent, ref, watchEffect, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "src/boot/axios";
 import { useUserStore } from "src/stores/user-store";
+import { useRouter } from "vue-router";
 
 defineComponent({
   name: "BuildingCardCustomer",
@@ -158,6 +247,10 @@ const props = defineProps({
   },
 });
 
+const options = ref('credit/debit');
+const digits = ref(['', '', '', ''])
+const gcash = ref(null)
+const regex = /^(\+?63|0)9\d{9}$/
 const card = ref(false);
 const reserve = ref(false);
 const isSucces = ref(false);
@@ -168,6 +261,7 @@ const form = ref({
   cid: 0,
   total_price: 0,
 });
+const router = useRouter();
 
 const getImageUrl = (url) => {
   const publicPath = import.meta.env.BASE_URL;
@@ -179,22 +273,23 @@ today.setUTCHours(0, 0, 0, 0); // Set the time to 00:00:00 in UTC
 const minDate = today.toISOString().split("T")[0];
 
 const handleRent = async (id) => {
-  form.value.bid = id
-  form.value.cid = useData.id
+  form.value.bid = id;
+  form.value.cid = useData.id;
   const res = await api.post("/rent-building", form.value);
-  console.log(res.data);
+
   if (res.data[0].st_code == 200) {
     $q.notify({
-      position: 'top',
-      type: 'positive',
-      message: res.data[0].st_msg
-    })
-    isSucces.value = true
+      position: "top",
+      type: "positive",
+      message: res.data[0].st_msg,
+    });
+    isSucces.value = true;
+
+    router.push("payment");
   }
 };
 
 watchEffect(() => {
-
   if (form.value !== "") {
     const oneDayPrice = props.price;
 

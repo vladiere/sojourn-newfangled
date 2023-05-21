@@ -51,6 +51,7 @@ import { defineComponent, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import { useUserStore } from "src/stores/user-store";
 
 defineComponent({
   name: "BuildingCard",
@@ -90,6 +91,8 @@ const router = useRouter();
 const $q = useQuasar();
 const deleted = ref(false);
 const isDeleted = ref(false);
+const useStore = useUserStore()
+const userData = useStore.data
 
 const getImageUrl = (url) => {
   const publicPath = import.meta.env.BASE_URL;
@@ -101,7 +104,12 @@ const handleEdit = (id) => {
 };
 
 const handleDelete = async (id) => {
-  const res = await api.put(`/remove-building/${id}`);
+
+
+  const res = await api.patch('/remove-building', {
+    id: id,
+    owner_id: userData.id
+  });
   if (res.data[0].st_code == 200) {
     $q.notify({
       position: "top",

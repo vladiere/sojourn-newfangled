@@ -90,7 +90,7 @@
         />
       </q-list>
       <q-list class="q-mt-xl">
-        <q-item-label header> Customer Service </q-item-label>
+        <q-item-label header> Sojourn Newfangled </q-item-label>
         <q-separator />
       </q-list>
     </q-drawer>

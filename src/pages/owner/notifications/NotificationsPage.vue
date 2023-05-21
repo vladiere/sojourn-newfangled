@@ -10,8 +10,6 @@
           class="col row items-center q-gutter-md shadow-4 q-pa-md text-capitalize"
           v-for="rents in newrentData"
           :key="rents.id"
-          to="notifications"
-
         >
           <q-avatar>
             <img src="https://www.svgrepo.com/show/508196/user-circle.svg" />
@@ -41,7 +39,6 @@
           class="col row items-center q-gutter-md shadow-4 q-pa-md text-capitalize text-grey-6"
           v-for="rents in oldrentData"
           :key="rents.id"
-          to="/notifications"
         >
           <q-avatar>
             <img

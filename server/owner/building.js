@@ -38,7 +38,7 @@ function addBuilding(req, res) {
       if (err) {
         res.status(500).json(err);
       } else {
-        console.log(results[0]);
+        
         res.json(results[0]);
       }
     }
@@ -59,11 +59,11 @@ const getMyBuildings = (req, res) => {
 };
 
 const removedMyBuilding = (req, res) => {
-  const { id } = req.params;
+  const { id, owner_id } = req.body;
 
   db.query(
-    "CALL sp_displaySearchBuilding(?,?,?)",
-    ["", id, "remove"],
+    "CALL sp_displaySearchBuilding(?,?,?,?)",
+    ["", id, owner_id, "remove"],
     (err, data) => {
       if (err) throw err;
       res.json(data[0]);

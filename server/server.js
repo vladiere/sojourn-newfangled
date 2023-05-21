@@ -48,7 +48,7 @@ app.post("/add-image", upload.single("file"), (req, res) => {
 });
 app.post("/add-building", owner.addBuilding);
 app.get("/get-buildings", owner.getMyBuildings);
-app.put("/remove-building", owner.removedMyBuilding);
+app.patch("/remove-building", owner.removedMyBuilding);
 
 //Customer
 app.post("/rent-building", customer.rentBuilding);

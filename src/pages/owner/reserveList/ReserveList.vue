@@ -1,135 +1,13 @@
 <template>
   <q-page padding>
-    <div class="row full-width justify-center items-center">
-      <div
-        class="q-gutter-md row items-center"
-        style="width: 60%"
-      >
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
-        </div>
-        <div class="column items-center text-h6 q-pa-md shadow-16">
-          <div class="col">
-            <q-avatar class="q-mr-md">
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
-            </q-avatar>
-            <span>John Añora</span>
-          </div>
-          <div class="col column text-subtitle1">
-            <span>Building number: 16132</span>
-            <span>Price: P12309</span>
-            <span>Date In: May 17, 2023 01:00 pm</span>
-            <span>Date Out: May 22, 2023 01:00 pm</span>
-          </div>
-          <div class="col q-gutter-md q-mt-md">
-            <q-btn round color="secondary" icon="check" />
-            <q-btn round color="negative" icon="close" />
-          </div>
+    <div class="column full-width justify-center items-center">
+      <div class="row full-width justify-center items-center">
+        <div class="q-gutter-md row items-center text-capitalize full-width">
+          <ReserveListCard
+            v-for="list in reserveList"
+            :key="list.rent_id"
+            v-bind="list"
+          />
         </div>
       </div>
     </div>
@@ -137,9 +15,34 @@
 </template>
 
 <script setup>
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted, watchEffect } from "vue";
+import { useUserStore } from "src/stores/user-store";
+import ReserveListCard from "components/card/ReserveListCard.vue";
+import { api } from "src/boot/axios";
 
 defineComponent({
   name: "ReserveList",
+});
+
+const useStore = useUserStore();
+const userData = useStore.data;
+const reserveList = ref({});
+
+const getReserveList = async () => {
+  const params = {
+    customer_id: 0,
+    rent_id: 0,
+    owner_id: userData.id,
+    stats: "",
+  };
+
+  const res = await api.get("/get-rent-building", { params });
+
+  reserveList.value = res.data;
+
+};
+
+onMounted(() => {
+  getReserveList();
 });
 </script>

@@ -70,6 +70,7 @@ import { defineComponent, ref } from "vue";
 import { api } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user-store";
+import { useQuasar } from "quasar";
 
 defineComponent({
   name: "LoginPage",
@@ -81,22 +82,29 @@ const form = ref({
   username: "",
   password: "",
 });
-const useStore = useUserStore()
+
+const useStore = useUserStore();
 const router = useRouter();
 const address = ref("");
+const $q = useQuasar();
 
 const handleSubmit = async () => {
   await api.post("/login", form.value).then((res) => {
-    
     if (res.data.status == 200) {
-      useStore.setUserData(res.data.user)
-      localStorage.setItem('token', res.data.token)
+      useStore.setUserData(res.data.user);
+      localStorage.setItem("token", res.data.token);
 
-      if (res.data.user.st_role === 'owner') {
-        router.push('/owner')
+      if (res.data.user.st_role === "owner") {
+        router.push("/owner");
       } else {
-        router.push('/customer')
+        router.push("/customer");
       }
+    } else {
+      $q.notify({
+        position: "top",
+        type: "warning",
+        message: res.data.message,
+      });
     }
   });
 };

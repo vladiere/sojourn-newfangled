@@ -39,7 +39,24 @@ const routes = [
       {
         path: "/reserve-list",
         name: "reserve-list",
-        component: () => import("pages/owner/reserveList/ReserveList.vue"),
+        component: () => import('layouts/ReserveLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reservelist',
+            component: () => import('pages/owner/reserveList/ReserveList.vue')
+          },
+          {
+            path: '/accepted-reserve',
+            name: 'accepted-reserve',
+            component: () => import('pages/owner/reserveList/AcceptList.vue'),
+          },
+          {
+            path: '/declined-reserve',
+            name: 'declined-reserve',
+            component: () => import('pages/owner/reserveList/DeclineList.vue'),
+          }
+        ],
         meta: {
           requiresAuth: true,
           role: "owner",
@@ -106,6 +123,15 @@ const routes = [
         path: "/customer-settings",
         name: "customer-settings",
         component: () => import("pages/customer/settings/SettingsView.vue"),
+        meta: {
+          requiresAuth: true,
+          role: "customer",
+        },
+      },
+      {
+        path: "/payment",
+        name: "payment",
+        component: () => import("pages/customer/payment/PaymentPage.vue"),
         meta: {
           requiresAuth: true,
           role: "customer",
