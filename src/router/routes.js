@@ -39,23 +39,23 @@ const routes = [
       {
         path: "/reserve-list",
         name: "reserve-list",
-        component: () => import('layouts/ReserveLayout.vue'),
+        component: () => import("layouts/ReserveLayout.vue"),
         children: [
           {
-            path: '',
-            name: 'reservelist',
-            component: () => import('pages/owner/reserveList/ReserveList.vue')
+            path: "",
+            name: "reservelist",
+            component: () => import("pages/owner/reserveList/ReserveList.vue"),
           },
           {
-            path: '/accepted-reserve',
-            name: 'accepted-reserve',
-            component: () => import('pages/owner/reserveList/AcceptList.vue'),
+            path: "/accepted-reserve",
+            name: "accepted-reserve",
+            component: () => import("pages/owner/reserveList/AcceptList.vue"),
           },
           {
-            path: '/declined-reserve',
-            name: 'declined-reserve',
-            component: () => import('pages/owner/reserveList/DeclineList.vue'),
-          }
+            path: "/declined-reserve",
+            name: "declined-reserve",
+            component: () => import("pages/owner/reserveList/DeclineList.vue"),
+          },
         ],
         meta: {
           requiresAuth: true,
@@ -153,7 +153,23 @@ const routes = [
     name: "recover-password",
     component: () => import("pages/recovery/RecoveryPage.vue"),
   },
-
+  {
+    path: "/sojourn-admin",
+    name: "sojourn-admin",
+    component: () => import("pages/admin/AdminPage.vue"),
+  },
+  {
+    path: "/homepage",
+    name: "homepage",
+    component: () => import("layouts/Adminlayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "users-page",
+        component: () => import("pages/admin/AdminHomePage.vue"),
+      },
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

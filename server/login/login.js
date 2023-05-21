@@ -11,7 +11,7 @@ const createToken = (user) => {
 };
 
 const authenticateCustomerOwner = (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } =  req.body;
 
   db.query("CALL sp_loginCustomerOwner(?)", [username], (err, results) => {
     if (err) {
