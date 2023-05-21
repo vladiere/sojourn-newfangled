@@ -15,6 +15,7 @@
       <span>Price: PHP{{ total }}</span>
       <span>Date In: {{ day_in }}</span>
       <span>Date Out: {{ day_out }}</span>
+      <span>Payment Method: {{ payment_method || 'Cash' }}</span>
     </div>
     <div class="col q-gutter-md q-mt-md">
       <q-btn
@@ -102,6 +103,9 @@ defineProps({
   },
   total: {
     type: Number,
+  },
+  payment_method: {
+    type: String,
   },
 });
 

@@ -256,10 +256,13 @@ const reserve = ref(false);
 const isSucces = ref(false);
 const stars = ref(5);
 const useData = useStore.data;
+
 const form = ref({
   bid: 0,
   cid: 0,
   total_price: 0,
+  pay_method: '',
+  number: ''
 });
 const router = useRouter();
 
@@ -275,6 +278,9 @@ const minDate = today.toISOString().split("T")[0];
 const handleRent = async (id) => {
   form.value.bid = id;
   form.value.cid = useData.id;
+  form.value.pay_method = options.value
+  form.value.number = gcash.value || digits.value
+  
   const res = await api.post("/rent-building", form.value);
 
   if (res.data[0].st_code == 200) {
@@ -285,7 +291,6 @@ const handleRent = async (id) => {
     });
     isSucces.value = true;
 
-    router.push("payment");
   }
 };
 

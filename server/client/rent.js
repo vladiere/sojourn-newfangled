@@ -1,7 +1,7 @@
 const db = require("../db/config");
 
 const rentBuilding = (req, res) => {
-  const { bid, cid, from, to, total_price } = req.body;
+  const { bid, cid, from, to, total_price, pay_method, number } = req.body;
 
   db.query(
     "CALL sp_rentBuilding(?,?,?,?,?)",
@@ -9,6 +9,13 @@ const rentBuilding = (req, res) => {
     (err, data) => {
       if (err) throw err;
       res.json(data[0]);
+      db.query("CALL sp_addPayment(?,?,?,?,?)", [
+        cid,
+        bid,
+        pay_method,
+        total_price,
+        number,
+      ]);
     }
   );
 };
