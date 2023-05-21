@@ -48,10 +48,10 @@ app.post("/add-image", upload.single("file"), (req, res) => {
 });
 app.post("/add-building", owner.addBuilding);
 app.get("/get-buildings", owner.getMyBuildings);
-app.put("/remove-building/:id", owner.removedMyBuilding);
+app.put("/remove-building", owner.removedMyBuilding);
 
 //Customer
 app.post("/rent-building", customer.rentBuilding);
-app.get('/get-rent-building/:id', customer.rentBuilding)
+app.get("/get-rent-building", customer.getRentBuldings);
 
 app.listen(port, () => console.info(`Listening on ${port}`));

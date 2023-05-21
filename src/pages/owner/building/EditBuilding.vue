@@ -149,6 +149,7 @@
         <q-btn
           label="Update Building"
           class="q-mb-md"
+          :disable="isUpdated"
           @click="handleUpdateBuilding"
         />
       </div>
@@ -161,6 +162,7 @@ import { defineComponent, ref, onMounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from 'quasar'
 import { api } from "src/boot/axios";
+import { useUserStore } from "src/stores/user-store";
 
 defineComponent({
   name: "EditBuilding",
@@ -172,7 +174,10 @@ const location = ref([]);
 const previewUrl = ref(null);
 const file = ref(null);
 const imgUrl = ref("");
+const isUpdated = ref(false)
 const $q = useQuasar();
+const useStore = useUserStore()
+const userData = useStore.data
 
 const form = ref({
   id: 0,
@@ -222,9 +227,11 @@ const addImage = async () => {
 };
 
 const getBuilding = async () => {
+
   const params = {
     search: "",
     id: router.currentRoute.value.query.id,
+    owner_id: userData.id
   };
 
   const publicPath = import.meta.env.BASE_URL;
@@ -257,6 +264,7 @@ const handleUpdateBuilding = async () => {
         type: 'positive',
         message: res.data[0].st_msg
       })
+      isUpdated.value = true
     } else {
       $q.notify({
         position: 'top',
@@ -273,8 +281,6 @@ const handleUpdateBuilding = async () => {
 onMounted(() => {
   setTimeout(() => {
     getBuilding();
-
-
   }, 500);
 });
 

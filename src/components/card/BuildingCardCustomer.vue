@@ -187,14 +187,14 @@ const handleRent = async (id) => {
     $q.notify({
       position: 'top',
       type: 'positive',
-      message: res.data.st_msg
+      message: res.data[0].st_msg
     })
     isSucces.value = true
   }
 };
 
 watchEffect(() => {
-  console.log(form.value);
+
   if (form.value !== "") {
     const oneDayPrice = props.price;
 

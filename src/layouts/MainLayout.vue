@@ -21,7 +21,9 @@
             icon="fas fa-bell"
             @click="onItemClick('notifications')"
           >
-            <q-badge color="red" floating transparent> 4 </q-badge>
+            <q-badge color="red" floating transparent v-if="unread !== 0">
+              {{ unread }}
+            </q-badge>
           </q-btn>
           <q-avatar>
             <img src="https://www.svgrepo.com/show/508196/user-circle.svg" />
@@ -100,10 +102,11 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, watchEffect, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user-store";
+import { api } from "src/boot/axios";
 
 const linksList = [
   {
@@ -126,21 +129,32 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-  async created() {
-    await api.get();
-  },
+
   setup() {
     const leftDrawerOpen = ref(false);
     const router = useRouter();
     const useStore = useUserStore();
     const userData = useStore.data;
+    const unread = ref(0);
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     };
 
-    const onItemClick = (path) => {
+    const onItemClick = async (path) => {
       if (path !== "logout") {
+        if (path === "notifications") {
+          const params = {
+            customer_id: 0,
+            rent_id: 0,
+            owner_id: userData.id,
+            stats: "read",
+          };
+
+          await api.get("/get-rent-building", { params });
+          router.push(path);
+        }
+
         router.push(path);
       } else {
         useStore.logout();
@@ -149,12 +163,35 @@ export default defineComponent({
       }
     };
 
+    const getUnreadCount = async () => {
+      const params = {
+        customer_id: 0,
+        rent_id: 0,
+        owner_id: userData.id,
+        stats: "unread",
+      };
+
+      const res = await api.get("/get-rent-building", { params });
+
+      unread.value = res.data[0].unread;
+    };
+
+    onMounted(getUnreadCount);
+
+    watchEffect(() => {
+      setInterval(() => {
+        getUnreadCount();
+      }, 1000);
+    });
+
     return {
+      getUnreadCount,
       essentialLinks: linksList,
       leftDrawerOpen,
       onItemClick,
       toggleLeftDrawer,
       userData,
+      unread,
     };
   },
 });

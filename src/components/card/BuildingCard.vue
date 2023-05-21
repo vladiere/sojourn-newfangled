@@ -27,7 +27,7 @@
           style="object-fit: cover"
         />
       </q-card-section>
-      
+
     </q-card-section>
 
     <q-separator />
