@@ -8,11 +8,14 @@ const multer = require("multer");
 const owner = require("./owner/building");
 const customer = require("./client/rent");
 const admin = require("./admin/auth");
-const cookieParser = require('cookie-parser')
+const users = require("./admin/users");
+const cookieParser = require("cookie-parser");
 
 const port = process.env.SERVER_PORT;
 
 const app = express();
+app.use(cookieParser());
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,7 +29,6 @@ const storage = multer.diskStorage({
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,5 +63,6 @@ app.get("/get-rent-building", customer.getRentBuldings);
 app.post("/api/register-admin", admin.registerAdmin);
 app.post("/api/logout-admin", admin.logoutAdmin);
 app.post("/api/login-admin", admin.loginAdmin);
+app.get('/api/get-users', users.getUsers)
 
 app.listen(port, () => console.info(`Listening on ${port}`));

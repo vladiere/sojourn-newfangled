@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-md">
-    <span class="text-h5">Owners List</span>
+    <span class="text-h5">Customers List</span>
     <q-table
       flat
       bordered
-      title="Owners List"
+      title="Customers List"
       :rows="rows"
       :columns="columns"
       row-key="name"
@@ -43,7 +43,7 @@ import { defineComponent, ref, onMounted, watchEffect } from "vue";
 import { api } from "src/boot/axios";
 
 defineComponent({
-  name: "AdminHomePage",
+  name: "CustomersPage",
 });
 
 const confirm = ref(false);
@@ -112,7 +112,7 @@ const rows = ref([]);
 
 const getOwners = async () => {
   const params = {
-    desc: "owners",
+    desc: "customers",
     token: localStorage.getItem("token"),
   };
 

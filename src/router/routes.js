@@ -161,12 +161,22 @@ const routes = [
   {
     path: "/homepage",
     name: "homepage",
-    component: () => import("layouts/Adminlayout.vue"),
+    component: () => import("layouts/AdminLayout.vue"),
     children: [
       {
         path: "",
         name: "users-page",
         component: () => import("pages/admin/AdminHomePage.vue"),
+      },
+      {
+        path: "/customers",
+        name: "customers-page",
+        component: () => import("pages/admin/CustomersPage.vue"),
+      },
+      {
+        path: "/admins",
+        name: "admins-page",
+        component: () => import("pages/admin/AdminsPage.vue"),
       },
     ],
   },

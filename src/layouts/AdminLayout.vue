@@ -11,7 +11,7 @@
 
         <q-btn-dropdown flat dropdown-icon="change_history">
           <q-list>
-            <q-item clickable v-close-popup @click="onItemClick('owners')">
+            <q-item clickable v-close-popup @click="onItemClick('homepage')">
               <q-item-section>
                 <q-item-label>Owners</q-item-label>
               </q-item-section>
@@ -48,6 +48,7 @@
 <script setup>
 import { defineComponent, ref } from "vue";
 import { useRouter } from 'vue-router'
+import { api } from "src/boot/axios";
 
 defineComponent({
   name: "AdminLayoutName",
@@ -58,7 +59,22 @@ const getImageUrl = (url) => {
   return `${publicPath}assets/${url}`;
 };
 
-const onItemClick = (path) => {
+const router = useRouter()
+
+const onItemClick = async (path) => {
+
+  if (path === 'logout') {
+    try {
+      await api.post('/api/logout-admin')
+      localStorage.clear()
+      router.push('sojourn-admin')
+    } catch (error) {
+      console.error(error)
+    }
+  } else {
+    router.push(path);
+  }
+
 
 }
 </script>

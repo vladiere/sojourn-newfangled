@@ -1,17 +1,59 @@
 <template>
   <div class="q-pa-md">
-    <span class="text-h5">Owners List</span>
+    <span class="text-h5">Admins List</span>
+    <div
+      class="q-pa-md row full-width justify-center items-center text-capitalize"
+    >
+      <q-form @submit.prevent="handleSubmit" class="row q-gutter-md">
+        <q-input color="teal" filled v-model="form.firstname" label="Firstname">
+          <template v-slot:prepend>
+            <q-icon name="fas fa-user" />
+          </template>
+        </q-input>
+        <q-input color="teal" filled v-model="form.lastname" label="Lastname">
+          <template v-slot:prepend>
+            <q-icon name="fas fa-user" />
+          </template>
+        </q-input>
+        <q-input color="teal" filled v-model="form.username" label="Username">
+          <template v-slot:prepend>
+            <q-icon name="fas fa-user-tie" />
+          </template>
+        </q-input>
+        <q-input
+          color="teal"
+          filled
+          v-model="form.password"
+          label="Password"
+          :type="isPwd ? 'password' : 'text'"
+        >
+          <template v-slot:prepend>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
+          </template>
+        </q-input>
+        <q-btn type="submit" color="teal" label="Add admin" />
+      </q-form>
+    </div>
     <q-table
       flat
       bordered
-      title="Owners List"
+      title="Admins List"
       :rows="rows"
       :columns="columns"
       row-key="name"
       separator="vertical"
       class="text-capitalize"
+      :loading="loading"
       v-model:selectedRow="selectedRow"
-    />
+    >
+      <template v-slot:loading>
+        <q-inner-loading showing color="primary" />
+      </template>
+    </q-table>
   </div>
   <q-dialog v-model="confirm" persistent>
     <q-card>
@@ -43,16 +85,24 @@ import { defineComponent, ref, onMounted, watchEffect } from "vue";
 import { api } from "src/boot/axios";
 
 defineComponent({
-  name: "AdminHomePage",
+  name: "AdminsPage",
 });
 
 const confirm = ref(false);
+const loading = ref(false);
+const isPwd = ref(true);
 const selectedRow = ref([]);
+const form = ref({
+  firstname: "",
+  lastname: "",
+  username: "",
+  password: "",
+});
 
 const columns = [
   {
     name: "firstname",
-    align: "left",
+    align: "center",
     label: "Firstname",
     field: "firstname",
     sortable: true,
@@ -66,44 +116,9 @@ const columns = [
   },
   {
     name: "username",
-    align: "right",
+    align: "center",
     label: "Username",
     field: "username",
-    sortable: true,
-  },
-  {
-    name: "email",
-    align: "right",
-    label: "Email",
-    field: "email",
-    sortable: true,
-  },
-  {
-    name: "birthdate",
-    align: "right",
-    label: "Birthdate",
-    field: "birthdate",
-    sortable: true,
-  },
-  {
-    name: "phone_number",
-    align: "right",
-    label: "Phone Number",
-    field: "phone_number",
-    sortable: true,
-  },
-  {
-    name: "created_at",
-    align: "right",
-    label: "date registered",
-    field: "created_at",
-    sortable: true,
-  },
-  {
-    name: "updated_at",
-    align: "right",
-    label: "Date updated",
-    field: "updated_at",
     sortable: true,
   },
 ];
@@ -112,7 +127,7 @@ const rows = ref([]);
 
 const getOwners = async () => {
   const params = {
-    desc: "owners",
+    desc: "admins",
     token: localStorage.getItem("token"),
   };
 
@@ -120,19 +135,12 @@ const getOwners = async () => {
     params,
   });
   rows.value = res.data;
-
 };
 
-const showDialog = (row) => {
-  // selectedRow.value = row;
-
-  console.log(row);
-  confirm.value = true;
-};
 
 onMounted(() => {
   getOwners();
-
-  console.log(selectedRow.value)
 });
+
+
 </script>
