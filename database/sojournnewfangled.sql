@@ -83,7 +83,7 @@ CREATE TABLE `admins` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `admins` (
 
 LOCK TABLES `admins` WRITE;
 /*!40000 ALTER TABLE `admins` DISABLE KEYS */;
-INSERT INTO `admins` VALUES (1,'john','anora','anora123','$2b$10$t/IdWaRLvsG/oZ1P9vQ9veC0bxC.4peCVcgSieOA.WEE2IdhZT6dq');
+INSERT INTO `admins` VALUES (1,'john','anora','anora123','$2b$10$t/IdWaRLvsG/oZ1P9vQ9veC0bxC.4peCVcgSieOA.WEE2IdhZT6dq'),(2,'didis','diesd','dodo123','$2b$10$3dv8jeMZz6e.oTQSoaHhP.Y1kUn7l2mKI4joCRX0XG3xtwoK9iUGa'),(3,'hidi','hidi','hidi','$2b$10$PSiX8ZWnILudx4cWJmGvKOApuFb4JBBDuWEjP/4FcPfv7DSuHDL2q'),(4,'asdf','asdf','asdf','$2b$10$C.WRg3QP1NA.YU3W1achfu7dqxmtR7MSeZNVQTemVYQ5dMQ3wa2N2');
 /*!40000 ALTER TABLE `admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,6 +410,33 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'sojournnewfangled'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_accessByAdmin` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_accessByAdmin`(
+	IN p_desc VARCHAR(45)
+)
+BEGIN
+	IF p_desc = 'owners' THEN
+		SELECT owner_id, username, firstname, lastname, email, birthdate, phone_number, DATE_FORMAT(created_at, '%M %d, %Y') AS created_at, DATE_FORMAT(updated_at, '%M %d, %Y') AS updated_at FROM owners;
+	ELSEIF p_desc = 'customers' THEN
+		SELECT customer_id, username, firstname, lastname, email, birthdate, phone_number, DATE_FORMAT(created_at, '%M %d, %Y') AS created_at, DATE_FORMAT(updated_at, '%M %d, %Y') AS updated_at FROM customers;
+    ELSE
+		SELECT admin_id, firstname, lastname, username FROM admins;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_addBuilding` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -870,4 +897,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-22 10:09:43
+-- Dump completed on 2023-05-22 15:32:00
