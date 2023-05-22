@@ -83,11 +83,12 @@
 <script setup>
 import { defineComponent, ref, onMounted, watchEffect } from "vue";
 import { api } from "src/boot/axios";
+import { useQuasar } from "quasar";
 
 defineComponent({
   name: "AdminsPage",
 });
-
+const $q = useQuasar();
 const confirm = ref(false);
 const loading = ref(false);
 const isPwd = ref(true);
@@ -137,10 +138,44 @@ const getOwners = async () => {
   rows.value = res.data;
 };
 
+const handleSubmit = async () => {
+  const res = await api.post("/api/register-admin", form.value)
+
+  console.log(res.data)
+
+  if (res.data[0].st_code == 200) {
+    $q.notify({
+      position: 'top',
+      type: 'positive',
+      message: res.data[0].st_msg
+    })
+    form.value.firstname = ''
+    form.value.lastname = ''
+    form.value.username = ''
+    form.value.password = ''
+    loading.value = true
+    setTimeout(() => {
+      loading.value = false
+    }, 1000);
+
+  } else {
+    $q.notify({
+      position: 'top',
+      type: 'negative',
+      message: res.data[0].st_msg
+    })
+  }
+
+}
 
 onMounted(() => {
   getOwners();
 });
 
+watchEffect(() => {
+  if (loading.value) {
+    getOwners();
+  }
+})
 
 </script>

@@ -6,8 +6,6 @@ const registerAdmin = (req, res) => {
   const { firstname, lastname, username, password } = req.body;
   const q = "CALL sp_signinSignupAdmin(?,?,?,?,?)";
 
-  console.log(firstname, lastname, username, password);
-
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
 
