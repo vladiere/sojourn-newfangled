@@ -4,31 +4,34 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="../assets/sojourn-logo.png" />
           </q-avatar>
-          Title
+          Sojourn Newfangled
         </q-toolbar-title>
 
-        <q-btn-dropdown
-          flat
-          dropdown-icon="change_history"
-        >
+        <q-btn-dropdown flat dropdown-icon="change_history">
           <q-list>
-            <q-item clickable v-close-popup @click="onItemClick">
+            <q-item clickable v-close-popup @click="onItemClick('owners')">
               <q-item-section>
-                <q-item-label>Photos</q-item-label>
+                <q-item-label>Owners</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="onItemClick">
+            <q-item clickable v-close-popup @click="onItemClick('customers')">
               <q-item-section>
-                <q-item-label>Videos</q-item-label>
+                <q-item-label>Customers</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="onItemClick">
+            <q-item clickable v-close-popup @click="onItemClick('admins')">
               <q-item-section>
-                <q-item-label>Articles</q-item-label>
+                <q-item-label>Admins</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onItemClick('logout')">
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -44,8 +47,18 @@
 
 <script setup>
 import { defineComponent, ref } from "vue";
+import { useRouter } from 'vue-router'
 
 defineComponent({
   name: "AdminLayoutName",
 });
+
+const getImageUrl = (url) => {
+  const publicPath = import.meta.env.BASE_URL;
+  return `${publicPath}assets/${url}`;
+};
+
+const onItemClick = (path) => {
+
+}
 </script>
